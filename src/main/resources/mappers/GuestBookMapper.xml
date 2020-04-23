@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GuestBookMapper">
+	<resultMap id="guestbook" type="com.gaimit.guestbook.model.GuestBook">
+		<result property="idEvent" column="id_event"/>
+		<result property="nameEvent" column="name_event"/>
+		<result property="idHost" column="id_host"/>
+		<result property="nameHost" column="name_host"/>
+		<result property="idGuest" column="id_guest"/>
+		<result property="nameGuest" column="name_guest"/>
+		<result property="celebrationGift" column="celebration_gift"/>
+		<result property="remarks" column="remarks"/>
+	</resultMap>
+	
+	<!-- 행사 이름을 저장한다 -->
+	<insert id="insertEvent" parameterType="com.gaimit.guestbook.model.GuestBook" useGeneratedKeys="true" keyProperty="id_event">
+		INSERT INTO event (
+			name_event
+		) VALUES (
+			#{nameEvent}
+		)
+	</insert>
+	
+	<select id="selectEventList" parameterType="com.gaimit.guestbook.model.GuestBook" resultMap="guestbook">
+		SELECT
+			id_event, name_event
+		FROM event
+		<!-- <where>
+			<if test="name != null">
+				AND name_event LIKE concat('%', #{nameEvent}, '%')
+			</if>
+		</where> -->
+		ORDER BY id_event DESC
+	</select>
+	
+</mapper>
